@@ -17,11 +17,6 @@ from flask import request
 # to store cookies and send back as response object
 from flask import make_response
 
-# Enable SSL for the application by creating an SSL Context
-#from OpenSSL import SSL
-#context = SSL.Context(SSL.PROTOCOL_TLSv1_2)
-#context.load_certchain('','')
-
 #from flask_sslify import SSLify
 
 
@@ -259,4 +254,4 @@ def startSpider():
 	return json.dumps(traversalDict, sort_keys=False, indent=4)
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0')
+	app.run(host='0.0.0.0', port=443)
