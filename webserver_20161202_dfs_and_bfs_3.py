@@ -28,7 +28,11 @@ import json # to build JSON output
 # Ordered Dictionaries
 from collections import OrderedDict
 
-from flask_cors import CORS, cross_origin # to bypass CORS
+# For random selection of DFS links
+import random
+
+# To bypass CORS
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 CORS(app) # enables CORS support on all routes
@@ -45,12 +49,6 @@ CORS(app) # enables CORS support on all routes
 #  specificaly the value of 'username'.  Otherwise it will say not set
 def index():
 	return 'Hello world'
-
-
-@app.route('/about')
-def about():
-	return 'The about page'
-
 
 @app.route('/add')
 def add():
@@ -205,7 +203,7 @@ def startSpider():
 
 	# Here is a helper function for a spider that completes Depth first search
 	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited):
-		url = pagesToVisit[len(pagesToVisit)-1]
+		url = pagesToVisit[random.randrange(0, len(pagesToVisit)-1)]
 		pagesToVisit = pagesToVisit[0:(len(pagesToVisit)-2)] #remove url being visited in this iteration
 		foundWord = False #IS THIS CREATING A PBM?
 		visited = False
