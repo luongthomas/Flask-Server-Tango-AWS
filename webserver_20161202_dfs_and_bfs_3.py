@@ -135,19 +135,19 @@ def startSpider():
 		    # Now access the site. Some sites block rapid fire requests. When this happens, wait out the block.
 			waitOut = True
 			attempts = 0
-			while (attempts < 5) and (waitOut == True):
+			while (attempts < 2) and (waitOut == True):
 				attempts = attempts + 1
 	            # Use the urlopen function from the standard Python 3
 				try:
 					response = urlopen(startUrl)
 					waitOut = False
-				# When server cannot be reached, wait 3 seconds on each of up to 5 attempts.
+				# When server cannot be reached, wait 2 seconds on each of up to 2 attempts.
 				except URLError as e:
 					if hasattr(e, 'reason'):
 	                    print('We failed to reach a server.')
 	                    print('Reason: ', e.reason)
-						if attempts < 4:
-							time.sleep(3)
+						if attempts < 1:
+							time.sleep(2)
 							waitOut = True
 						else:
 							return "",[]
