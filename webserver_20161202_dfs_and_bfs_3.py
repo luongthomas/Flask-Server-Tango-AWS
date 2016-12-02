@@ -277,7 +277,7 @@ def startSpider():
 		traversalDict = breadthSpider(startUrl, keyword, maxPages)
 	elif searchType == "DFS":
 		print("Spider is starting a depth search from url: " + str(startUrl) + " and searching for keyword: " + str(keyword) + " with " + str(maxPages) + " max pages.\n")
-		traversalDict = depthSpider(startUrl, keyword, maxPages, self)
+		traversalDict = depthSpider(startUrl, keyword, maxPages)
 	else:
 		print("The spider needs to receive a valid search type: " + str(searchType) + " is neither 'depth' nor 'breadth'.\n")
 	print("Crawling is complete\n")
