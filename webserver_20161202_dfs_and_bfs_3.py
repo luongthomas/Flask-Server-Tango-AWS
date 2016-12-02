@@ -85,6 +85,13 @@ def startSpider():
 	print(parameters)
 	print("\n")
 
+	# Hold pool of links of the startUrl just in case crawl hits a dead end
+	startingLinks = []
+	startingData = ""
+	print(numberVisited, "Accumulating links for first node, Visiting:", url)
+	parser = LinkParser()
+	startingData, startingLinks = parser.getLinks(url)
+
 	# Function to check if site is up and available to be crawled via status code 200
 	def isSiteAvailable(url):
 		if urlopen(url).getcode() == 200:
@@ -209,6 +216,9 @@ def startSpider():
 				except:
 					print(" **Failed!**")
 		return traversalDict
+
+
+
 
 	# Here is a helper function for a spider that completes Depth first search
 	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited):
