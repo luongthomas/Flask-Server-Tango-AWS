@@ -218,7 +218,9 @@ def startSpider():
 		while (True):
 			randomIndex = random.randint(0, len(pagesToVisit)-1)
 			url = pagesToVisit[randomIndex]
-			if (isSiteAvailable(url) == True):
+
+			# Need to use self if calling function of same class
+			if (self.isSiteAvailable(url) == True):
 				break
 
 		pagesToVisit = pagesToVisit[0:(len(pagesToVisit)-2)] #remove url being visited in this iteration
