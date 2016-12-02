@@ -175,7 +175,7 @@ def startSpider():
 	# word since encountering the word ends the search. The crawler does not visit a page twice.
 	## Credit: Minor changes to http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/
 
-	def breadthSpider(url, word, maxPages):
+	def breadthSpider(url, word, maxPages, self):
 		traversalDict = OrderedDict([('searchType', 'BFS')]) # Modification --> build a dictionary of pages you've traversed;
 		pagesToVisit = [url] # Modification
 		numberVisited = 0
@@ -277,7 +277,7 @@ def startSpider():
 		traversalDict = breadthSpider(startUrl, keyword, maxPages)
 	elif searchType == "DFS":
 		print("Spider is starting a depth search from url: " + str(startUrl) + " and searching for keyword: " + str(keyword) + " with " + str(maxPages) + " max pages.\n")
-		traversalDict = depthSpider(startUrl, keyword, maxPages)
+		traversalDict = depthSpider(startUrl, keyword, maxPages, self)
 	else:
 		print("The spider needs to receive a valid search type: " + str(searchType) + " is neither 'depth' nor 'breadth'.\n")
 	print("Crawling is complete\n")
