@@ -91,6 +91,15 @@ def startSpider():
 
 	class LinkParser(HTMLParser):
 
+		# Function to check if site is up and available to be crawled via status code 200
+		def isSiteAvailable(url):
+			if urllib.urlopen(url).getcode() == 200:
+				print(url, ' is up.')
+				return True
+			else:
+				print(url, ' is down.')
+				return False
+
 		# This is a function that HTMLParser normally has but we are adding some functionality to it
 		def handle_starttag(self, tag, attrs):
 			# We are looking for the begining of a link. Links normally look
@@ -203,9 +212,12 @@ def startSpider():
 
 	# Here is a helper function for a spider that completes Depth first search
 	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited):
-		print('pagesToVisit', pagesToVisit)
-		randomIndex = random.randint(0, len(pagesToVisit)-1)
-		url = pagesToVisit[randomIndex]
+
+		# Chooses random available link from direct children of previously visited link
+		while (isSiteAvailable != True):
+			randomIndex = random.randint(0, len(pagesToVisit)-1)
+			url = pagesToVisit[randomIndex]
+
 		pagesToVisit = pagesToVisit[0:(len(pagesToVisit)-2)] #remove url being visited in this iteration
 		foundWord = False #IS THIS CREATING A PBM?
 		visited = False
