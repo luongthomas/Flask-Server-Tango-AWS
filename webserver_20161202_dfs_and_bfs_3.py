@@ -203,7 +203,9 @@ def startSpider():
 
 	# Here is a helper function for a spider that completes Depth first search
 	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited):
-		url = pagesToVisit[random.randint(0, len(pagesToVisit)-1)]
+		print('pagesToVisit', pagesToVisit)
+		randomIndex = random.randint(0, len(pagesToVisit)-1)
+		url = pagesToVisit[randomIndex]
 		pagesToVisit = pagesToVisit[0:(len(pagesToVisit)-2)] #remove url being visited in this iteration
 		foundWord = False #IS THIS CREATING A PBM?
 		visited = False
@@ -221,7 +223,7 @@ def startSpider():
 					foundWord = True
 					print(" **Found word!**")
 
-				# only visit the links from the current node's children array	
+				# only visit the links from the current node's children array
 				pagesToVisit = links[::-1]  # Add the pages that we visited in reverse order so that you pop the 1st link in content-order from the top of stack.
 				traversalDict.update({url: {"children": links, "kw": foundWord}})
 				print(" **Success!**")
