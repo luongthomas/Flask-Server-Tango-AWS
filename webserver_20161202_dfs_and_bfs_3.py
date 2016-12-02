@@ -86,11 +86,11 @@ def startSpider():
 	print("\n")
 
 	# Hold pool of links of the startUrl just in case crawl hits a dead end
-	startLinks = []
-	startData = ""
-	print("Accumulating links for first node, Visiting:", startUrl)
-	startParser = LinkParser()
-	startingData, startingLinks = startParser.getLinks(startUrl)
+	#startLinks = []
+	#startData = ""
+	#print("Accumulating links for first node, Visiting:", startUrl)
+	#startParser = LinkParser()
+	#startingData, startingLinks = startParser.getLinks(startUrl)
 
 	# Function to check if site is up and available to be crawled via status code 200
 	def isSiteAvailable(url):
@@ -183,7 +183,8 @@ def startSpider():
 	## Credit: Minor changes to http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/
 
 	def breadthSpider(url, word, maxPages):
-		traversalDict = OrderedDict([('searchType', 'BFS')]) # Modification --> build a dictionary of pages you've traversed;
+		#traversalDict = OrderedDict([('searchType', 'BFS')]) # Modification --> build a dictionary of pages you've traversed;
+		traversalDict = OrderedDict() # Modification --> build a dictionary of pages you've traversed;
 		pagesToVisit = [url] # Modification
 		numberVisited = 0
 		foundWord = False
@@ -265,7 +266,8 @@ def startSpider():
 	# Here is a spider that completes a Depth First search.
 	def depthSpider(url, word, maxPages):
 		# traversalList = []
-		traversalDict = OrderedDict([('searchType', 'DFS')]) #nj --> build ordered list of pages you've traversed; will be JS w/ parent/child
+		# traversalDict = OrderedDict([('searchType', 'DFS')]) #nj --> build ordered list of pages you've traversed; will be JS w/ parent/child
+		traversalDict = OrderedDict() #nj --> build ordered list of pages you've traversed; will be JS w/ parent/child
 		pagesToVisit = [url] #nj
 		numberVisited = 0
 		foundWord = False
@@ -289,6 +291,35 @@ def startSpider():
 	else:
 		print("The spider needs to receive a valid search type: " + str(searchType) + " is neither 'depth' nor 'breadth'.\n")
 	print("Crawling is complete\n")
+
+
+	#OUTPUT
+
+	# Pare down the output & exclude from each array of children any url that won't be included in the visualization.
+	def trimDictionary(traversalDict):
+		newDict = OrderedDict([('searchType', searchType)])
+		# Outer loop: do for each item in the original dictionary
+		for key, value in traversalDict.items():
+			# Isolate the children and initialize a new, empty array of children
+			children, kw = map(value.get, ('children', 'kw'))
+			links = []
+			# Intermediate loop: do for each child of a given url
+			for child in children:
+				# Inner loop: for each url/key in the original dictionary
+				include = False
+				for visitedURL, itsValue in traversalDict.items():
+					# Compare the child to each visited url. If a match is found, append to new dictionary as child of key.
+					if child == visitedURL:
+						include = True
+				if include == True:
+					links.append(child)
+			# end of intermediate loop. Array [links] now contains all children of this URL that are to be kept
+			# next: save info on this URL
+			newDict.update({key: {"children": links, "kw": kw}})
+		# end of outer loop: newDict is now complete, with trimmed info for each visited URL
+		return newDict
+
+	traversalDict = trimDictionary(traversalDict)
 
 	# GENERATE OUTPUT
 	# Write the results from the crawl, which are saved in traversalDict, in JSON format and into a local file.
