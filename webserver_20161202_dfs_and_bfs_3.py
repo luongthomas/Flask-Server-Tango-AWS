@@ -220,7 +220,8 @@ def startSpider():
 				if data.find(word)>-1:
 					foundWord = True
 					print(" **Found word!**")
-				pagesToVisit = pagesToVisit + links[::-1]  # Add the pages that we visited in reverse order so that you pop the 1st link in content-order from the top of stack.
+				# Commenting this out since it will jump backwards instead of advance through the of the node graph to deeper depths	
+				#pagesToVisit = pagesToVisit + links[::-1]  # Add the pages that we visited in reverse order so that you pop the 1st link in content-order from the top of stack.
 				traversalDict.update({url: {"children": links, "kw": foundWord}})
 				print(" **Success!**")
 				if data != "":
