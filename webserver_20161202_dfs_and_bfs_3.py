@@ -203,7 +203,7 @@ def startSpider():
 
 	# Here is a helper function for a spider that completes Depth first search
 	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited):
-		url = pagesToVisit[random.randrange(0, len(pagesToVisit)-1)]
+		url = pagesToVisit[random.randint(0, len(pagesToVisit)-1)]
 		pagesToVisit = pagesToVisit[0:(len(pagesToVisit)-2)] #remove url being visited in this iteration
 		foundWord = False #IS THIS CREATING A PBM?
 		visited = False
