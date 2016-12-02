@@ -175,7 +175,7 @@ def startSpider():
 	# word since encountering the word ends the search. The crawler does not visit a page twice.
 	## Credit: Minor changes to http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/
 
-	def breadthSpider(url, word, maxPages, self):
+	def breadthSpider(url, word, maxPages):
 		traversalDict = OrderedDict([('searchType', 'BFS')]) # Modification --> build a dictionary of pages you've traversed;
 		pagesToVisit = [url] # Modification
 		numberVisited = 0
@@ -211,7 +211,7 @@ def startSpider():
 		return traversalDict
 
 	# Here is a helper function for a spider that completes Depth first search
-	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited, self):
+	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited):
 
 		# Chooses random available link from direct children of previously visited link
 		# Closest thing to a do-while loop in python.
@@ -220,7 +220,7 @@ def startSpider():
 			url = pagesToVisit[randomIndex]
 
 			# Need to use self if calling function of same class
-			if (self.isSiteAvailable(url) == True):
+			if (isSiteAvailable(url, self) == True):
 				break
 
 		pagesToVisit = pagesToVisit[0:(len(pagesToVisit)-2)] #remove url being visited in this iteration
