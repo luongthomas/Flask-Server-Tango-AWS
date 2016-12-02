@@ -86,11 +86,11 @@ def startSpider():
 	print("\n")
 
 	# Hold pool of links of the startUrl just in case crawl hits a dead end
-	startingLinks = []
-	startingData = ""
-	print(numberVisited, "Accumulating links for first node, Visiting:", url)
-	parser = LinkParser()
-	startingData, startingLinks = parser.getLinks(url)
+	startLinks = []
+	startData = ""
+	print("Accumulating links for first node, Visiting:", startUrl)
+	startParser = LinkParser()
+	startingData, startingLinks = startParser.getLinks(startUrl)
 
 	# Function to check if site is up and available to be crawled via status code 200
 	def isSiteAvailable(url):
@@ -151,16 +151,16 @@ def startSpider():
 				# When server cannot be reached, wait 2 seconds on each of up to 2 attempts.
 				except URLError as e:
 					if hasattr(e, 'reason'):
-	                    print('We failed to reach a server.')
-	                    print('Reason: ', e.reason)
+						print('We failed to reach a server.')
+						print('Reason: ', e.reason)
 						if attempts < 1:
 							time.sleep(2)
 							waitOut = True
 						else:
 							return "",[]
 					elif hasattr(e, 'code'):
-	                    print('The server couldn\'t fulfill the request.')
-	                    print('Error code: ', e.code)
+						print('The server couldn\'t fulfill the request.')
+						print('Error code: ', e.code)
 						waitOut = False
 						return "",[]
 			else:
