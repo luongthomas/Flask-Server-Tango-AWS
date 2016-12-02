@@ -85,20 +85,20 @@ def startSpider():
 	print(parameters)
 	print("\n")
 
+	# Function to check if site is up and available to be crawled via status code 200
+	def isSiteAvailable(url):
+		if urllib.urlopen(url).getcode() == 200:
+			print(url, ' is up.')
+			return True
+		else:
+			print(url, ' is down.')
+			return False
+
 	# PARSING TOOL
     # Credit (with modifications): http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/
     # We are going to create a class called LinkParser that inherits some methods from HTMLParser which is why it is passed into the definition
 
 	class LinkParser(HTMLParser):
-
-		# Function to check if site is up and available to be crawled via status code 200
-		def isSiteAvailable(self, url):
-			if urllib.urlopen(url).getcode() == 200:
-				print(url, ' is up.')
-				return True
-			else:
-				print(url, ' is down.')
-				return False
 
 		# This is a function that HTMLParser normally has but we are adding some functionality to it
 		def handle_starttag(self, tag, attrs):
@@ -211,16 +211,14 @@ def startSpider():
 		return traversalDict
 
 	# Here is a helper function for a spider that completes Depth first search
-	def goDeep(self, word, maxPages, traversalDict, pagesToVisit, numberVisited):
+	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited):
 
 		# Chooses random available link from direct children of previously visited link
 		# Closest thing to a do-while loop in python.
 		while (True):
 			randomIndex = random.randint(0, len(pagesToVisit)-1)
 			url = pagesToVisit[randomIndex]
-
-			# Need to use self if calling function of same class
-			if (self.isSiteAvailable(url) == True):
+			if (isSiteAvailable(url) == True):
 				break
 
 		pagesToVisit = pagesToVisit[0:(len(pagesToVisit)-2)] #remove url being visited in this iteration
@@ -250,19 +248,19 @@ def startSpider():
 			except:
 				print(" **Failed!**")
 		while numberVisited < maxPages and pagesToVisit != [] and not foundWord:
-			foundWord, traversalDict, pagesToVisit, numberVisited = goDeep(self, url, word, maxPages, traversalDict, pagesToVisit, numberVisited)
+			foundWord, traversalDict, pagesToVisit, numberVisited = goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited)
 		#After the branch is explored in full, return traversalList
 		return foundWord, traversalDict, pagesToVisit, numberVisited
 
 	# Here is a spider that completes a Depth First search.
-	def depthSpider(self, url, word, maxPages):
+	def depthSpider(url, word, maxPages):
 		# traversalList = []
 		traversalDict = OrderedDict([('searchType', 'DFS')]) #nj --> build ordered list of pages you've traversed; will be JS w/ parent/child
 		pagesToVisit = [url] #nj
 		numberVisited = 0
 		foundWord = False
 		# numberVisited, foundWord, traversalList = goDeep(url, word, maxPages, numberVisited, traversalList)
-		foundWord, traversalDict, pagesToVisit, numberVisited = goDeep(self, url, word, maxPages, traversalDict, pagesToVisit, numberVisited)
+		foundWord, traversalDict, pagesToVisit, numberVisited = goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited)
 		if foundWord:
 			print("The word", word, "was found at", url)
 		else:
@@ -277,7 +275,7 @@ def startSpider():
 		traversalDict = breadthSpider(startUrl, keyword, maxPages)
 	elif searchType == "DFS":
 		print("Spider is starting a depth search from url: " + str(startUrl) + " and searching for keyword: " + str(keyword) + " with " + str(maxPages) + " max pages.\n")
-		traversalDict = depthSpider(self, startUrl, keyword, maxPages)
+		traversalDict = depthSpider(startUrl, keyword, maxPages)
 	else:
 		print("The spider needs to receive a valid search type: " + str(searchType) + " is neither 'depth' nor 'breadth'.\n")
 	print("Crawling is complete\n")
