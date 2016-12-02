@@ -87,7 +87,7 @@ def startSpider():
 
 	# Function to check if site is up and available to be crawled via status code 200
 	def isSiteAvailable(url):
-		if urllib.urlopen(url).getcode() == 200:
+		if urlopen(url).getcode() == 200:
 			print(url, ' is up.')
 			return True
 		else:
