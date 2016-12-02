@@ -255,7 +255,7 @@ def startSpider():
 		return foundWord, traversalDict, pagesToVisit, numberVisited
 
 	# Here is a spider that completes a Depth First search.
-	def depthSpider(self, url, word, maxPages):
+	def depthSpider(self, url, word, maxPages, self):
 		# traversalList = []
 		traversalDict = OrderedDict([('searchType', 'DFS')]) #nj --> build ordered list of pages you've traversed; will be JS w/ parent/child
 		pagesToVisit = [url] #nj
