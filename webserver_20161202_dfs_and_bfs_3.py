@@ -214,9 +214,12 @@ def startSpider():
 	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited):
 
 		# Chooses random available link from direct children of previously visited link
-		while (isSiteAvailable != True):
+		# Closest thing to a do-while loop in python.
+		while (True):
 			randomIndex = random.randint(0, len(pagesToVisit)-1)
 			url = pagesToVisit[randomIndex]
+			if (isSiteAvailable(url) == True):
+				break
 
 		pagesToVisit = pagesToVisit[0:(len(pagesToVisit)-2)] #remove url being visited in this iteration
 		foundWord = False #IS THIS CREATING A PBM?
