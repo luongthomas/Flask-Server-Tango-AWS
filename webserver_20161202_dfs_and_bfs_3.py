@@ -211,7 +211,7 @@ def startSpider():
 		return traversalDict
 
 	# Here is a helper function for a spider that completes Depth first search
-	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited, self):
+	def goDeep(self, word, maxPages, traversalDict, pagesToVisit, numberVisited):
 
 		# Chooses random available link from direct children of previously visited link
 		# Closest thing to a do-while loop in python.
@@ -250,19 +250,19 @@ def startSpider():
 			except:
 				print(" **Failed!**")
 		while numberVisited < maxPages and pagesToVisit != [] and not foundWord:
-			foundWord, traversalDict, pagesToVisit, numberVisited = goDeep(url, word, maxPages, traversalDict, pagesToVisit, numberVisited)
+			foundWord, traversalDict, pagesToVisit, numberVisited = goDeep(self, url, word, maxPages, traversalDict, pagesToVisit, numberVisited)
 		#After the branch is explored in full, return traversalList
 		return foundWord, traversalDict, pagesToVisit, numberVisited
 
 	# Here is a spider that completes a Depth First search.
-	def depthSpider(self, url, word, maxPages, self):
+	def depthSpider(self, url, word, maxPages):
 		# traversalList = []
 		traversalDict = OrderedDict([('searchType', 'DFS')]) #nj --> build ordered list of pages you've traversed; will be JS w/ parent/child
 		pagesToVisit = [url] #nj
 		numberVisited = 0
 		foundWord = False
 		# numberVisited, foundWord, traversalList = goDeep(url, word, maxPages, numberVisited, traversalList)
-		foundWord, traversalDict, pagesToVisit, numberVisited = goDeep(self, word, maxPages, traversalDict, pagesToVisit, numberVisited)
+		foundWord, traversalDict, pagesToVisit, numberVisited = goDeep(self, url, word, maxPages, traversalDict, pagesToVisit, numberVisited)
 		if foundWord:
 			print("The word", word, "was found at", url)
 		else:
@@ -277,7 +277,7 @@ def startSpider():
 		traversalDict = breadthSpider(startUrl, keyword, maxPages)
 	elif searchType == "DFS":
 		print("Spider is starting a depth search from url: " + str(startUrl) + " and searching for keyword: " + str(keyword) + " with " + str(maxPages) + " max pages.\n")
-		traversalDict = depthSpider(startUrl, keyword, maxPages, self)
+		traversalDict = depthSpider(self, startUrl, keyword, maxPages)
 	else:
 		print("The spider needs to receive a valid search type: " + str(searchType) + " is neither 'depth' nor 'breadth'.\n")
 	print("Crawling is complete\n")
