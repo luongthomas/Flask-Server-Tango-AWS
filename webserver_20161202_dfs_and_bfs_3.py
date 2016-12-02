@@ -92,7 +92,7 @@ def startSpider():
 	class LinkParser(HTMLParser):
 
 		# Function to check if site is up and available to be crawled via status code 200
-		def isSiteAvailable(url, self):
+		def isSiteAvailable(self, url):
 			if urllib.urlopen(url).getcode() == 200:
 				print(url, ' is up.')
 				return True
@@ -211,7 +211,7 @@ def startSpider():
 		return traversalDict
 
 	# Here is a helper function for a spider that completes Depth first search
-	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited):
+	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited, self):
 
 		# Chooses random available link from direct children of previously visited link
 		# Closest thing to a do-while loop in python.
@@ -220,7 +220,7 @@ def startSpider():
 			url = pagesToVisit[randomIndex]
 
 			# Need to use self if calling function of same class
-			if (isSiteAvailable(url, self) == True):
+			if (self.isSiteAvailable(url) == True):
 				break
 
 		pagesToVisit = pagesToVisit[0:(len(pagesToVisit)-2)] #remove url being visited in this iteration
