@@ -144,16 +144,16 @@ def startSpider():
 				# When server cannot be reached, wait 3 seconds on each of up to 5 attempts.
 				except URLError as e:
 					if hasattr(e, 'reason'):
-	                    print('We failed to reach a server.')
-	                    print('Reason: ', e.reason)
+						print('We failed to reach a server.')
+						print('Reason: ', e.reason)
 						if attempts < 4:
 							time.sleep(3)
 							waitOut = True
 						else:
 							return "",[]
 					elif hasattr(e, 'code'):
-	                    print('The server couldn\'t fulfill the request.')
-	                    print('Error code: ', e.code)
+						print('The server couldn\'t fulfill the request.')
+						print('Error code: ', e.code)
 						waitOut = False
 						return "",[]
 			else:
