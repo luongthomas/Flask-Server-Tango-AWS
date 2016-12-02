@@ -17,3 +17,469 @@ ImportError: No module named html.parser
 71.193.183.116 - - [24/Nov/2016 04:22:31] "GET / HTTP/1.1" 200 -
 71.193.183.116 - - [24/Nov/2016 04:23:56] "GET / HTTP/1.1" 200 -
 71.193.183.116 - - [24/Nov/2016 04:24:26] "POST /crawler HTTP/1.1" 200 -
+ * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+71.193.183.116 - - [30/Nov/2016 09:27:48] "POST /crawler HTTP/1.1" 400 -
+66.102.6.15 - - [30/Nov/2016 09:28:43] "GET / HTTP/1.1" 200 -
+71.193.183.116 - - [30/Nov/2016 09:51:22] "POST /crawler HTTP/1.1" 200 -
+[2016-11-30 09:52:43,598] ERROR in app: Exception on /crawler [POST]
+Traceback (most recent call last):
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1988, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1641, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask_cors/extension.py", line 161, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1544, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1639, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1625, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "webserver_20161126_dfs_and_bfs.py", line 235, in startSpider
+    traversalDict = breadthSpider(startUrl, keyword, maxPages)
+  File "webserver_20161126_dfs_and_bfs.py", line 177, in breadthSpider
+    traversalDict.update({url: {"children": links, "keyword": foundWord}})
+UnboundLocalError: local variable 'links' referenced before assignment
+71.193.183.116 - - [30/Nov/2016 09:52:43] "POST /crawler HTTP/1.1" 500 -
+[2016-11-30 09:52:58,365] ERROR in app: Exception on /crawler [POST]
+Traceback (most recent call last):
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1988, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1641, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask_cors/extension.py", line 161, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1544, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1639, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1625, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "webserver_20161126_dfs_and_bfs.py", line 235, in startSpider
+    traversalDict = breadthSpider(startUrl, keyword, maxPages)
+  File "webserver_20161126_dfs_and_bfs.py", line 177, in breadthSpider
+    traversalDict.update({url: {"children": links, "keyword": foundWord}})
+UnboundLocalError: local variable 'links' referenced before assignment
+71.193.183.116 - - [30/Nov/2016 09:52:58] "POST /crawler HTTP/1.1" 500 -
+[2016-11-30 09:53:05,179] ERROR in app: Exception on /crawler [POST]
+Traceback (most recent call last):
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1988, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1641, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask_cors/extension.py", line 161, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1544, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1639, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1625, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "webserver_20161126_dfs_and_bfs.py", line 235, in startSpider
+    traversalDict = breadthSpider(startUrl, keyword, maxPages)
+  File "webserver_20161126_dfs_and_bfs.py", line 177, in breadthSpider
+    traversalDict.update({url: {"children": links, "keyword": foundWord}})
+UnboundLocalError: local variable 'links' referenced before assignment
+71.193.183.116 - - [30/Nov/2016 09:53:05] "POST /crawler HTTP/1.1" 500 -
+[2016-11-30 09:53:06,915] ERROR in app: Exception on /crawler [POST]
+Traceback (most recent call last):
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1988, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1641, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask_cors/extension.py", line 161, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1544, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1639, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1625, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "webserver_20161126_dfs_and_bfs.py", line 235, in startSpider
+    traversalDict = breadthSpider(startUrl, keyword, maxPages)
+  File "webserver_20161126_dfs_and_bfs.py", line 177, in breadthSpider
+    traversalDict.update({url: {"children": links, "keyword": foundWord}})
+UnboundLocalError: local variable 'links' referenced before assignment
+71.193.183.116 - - [30/Nov/2016 09:53:06] "POST /crawler HTTP/1.1" 500 -
+71.193.183.116 - - [30/Nov/2016 09:55:37] "POST /crawler HTTP/1.1" 200 -
+[2016-11-30 10:08:29,409] ERROR in app: Exception on /crawler [POST]
+Traceback (most recent call last):
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1988, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1641, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask_cors/extension.py", line 161, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1544, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1639, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1625, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "webserver_20161126_dfs_and_bfs.py", line 235, in startSpider
+    traversalDict = breadthSpider(startUrl, keyword, maxPages)
+  File "webserver_20161126_dfs_and_bfs.py", line 177, in breadthSpider
+    traversalDict.update({url: {"children": links, "keyword": foundWord}})
+UnboundLocalError: local variable 'links' referenced before assignment
+71.193.183.116 - - [30/Nov/2016 10:08:29] "POST /crawler HTTP/1.1" 500 -
+71.193.183.116 - - [30/Nov/2016 10:08:44] "POST /crawler HTTP/1.1" 200 -
+[2016-11-30 10:09:46,619] ERROR in app: Exception on /crawler [POST]
+Traceback (most recent call last):
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1988, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1641, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask_cors/extension.py", line 161, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1544, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1639, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1625, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "webserver_20161126_dfs_and_bfs.py", line 235, in startSpider
+    traversalDict = breadthSpider(startUrl, keyword, maxPages)
+  File "webserver_20161126_dfs_and_bfs.py", line 177, in breadthSpider
+    traversalDict.update({url: {"children": links, "keyword": foundWord}})
+UnboundLocalError: local variable 'links' referenced before assignment
+71.193.183.116 - - [30/Nov/2016 10:09:46] "POST /crawler HTTP/1.1" 500 -
+[2016-11-30 10:09:48,268] ERROR in app: Exception on /crawler [POST]
+Traceback (most recent call last):
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1988, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1641, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask_cors/extension.py", line 161, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1544, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1639, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1625, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "webserver_20161126_dfs_and_bfs.py", line 235, in startSpider
+    traversalDict = breadthSpider(startUrl, keyword, maxPages)
+  File "webserver_20161126_dfs_and_bfs.py", line 177, in breadthSpider
+    traversalDict.update({url: {"children": links, "keyword": foundWord}})
+UnboundLocalError: local variable 'links' referenced before assignment
+71.193.183.116 - - [30/Nov/2016 10:09:48] "POST /crawler HTTP/1.1" 500 -
+[2016-11-30 10:09:49,270] ERROR in app: Exception on /crawler [POST]
+Traceback (most recent call last):
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1988, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1641, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask_cors/extension.py", line 161, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1544, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1639, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/ec2-user/myPython3.5.2/lib/python3.5/site-packages/flask/app.py", line 1625, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "webserver_20161126_dfs_and_bfs.py", line 235, in startSpider
+    traversalDict = breadthSpider(startUrl, keyword, maxPages)
+  File "webserver_20161126_dfs_and_bfs.py", line 177, in breadthSpider
+    traversalDict.update({url: {"children": links, "keyword": foundWord}})
+UnboundLocalError: local variable 'links' referenced before assignment
+71.193.183.116 - - [30/Nov/2016 10:09:49] "POST /crawler HTTP/1.1" 500 -
+71.193.183.116 - - [30/Nov/2016 10:09:55] "POST /crawler HTTP/1.1" 200 -
+71.193.183.116 - - [01/Dec/2016 03:33:44] "POST /crawler HTTP/1.1" 200 -
+
+Hello, your cookie has been received
+Your parameters are in the format of: 
+[startUrl, keyword, maxPages, searchType]
+['https://www.reddit.com', 'cats', 10, 'BFS']
+
+
+Spider is starting a breadth search from url: https://www.reddit.com and searching for keyword: cats with 10 max pages.
+
+1 Visiting: https://www.reddit.com
+ **Success!**
+2 Visiting: https://www.reddit.com#content
+ **Success!**
+3 Visiting: https://www.reddit.com/r/announcements/
+ **Failed!**
+4 Visiting: https://www.reddit.com/r/Art/
+ **Failed!**
+5 Visiting: https://www.reddit.com/r/AskReddit/
+ **Failed!**
+6 Visiting: https://www.reddit.com/r/askscience/
+ **Failed!**
+7 Visiting: https://www.reddit.com/r/aww/
+ **Failed!**
+8 Visiting: https://www.reddit.com/r/blog/
+ **Failed!**
+9 Visiting: https://www.reddit.com/r/books/
+ **Failed!**
+10 Visiting: https://www.reddit.com/r/creepy/
+ **Success!**
+Word never found
+Crawling is complete
+
+
+Hello, your cookie has been received
+Your parameters are in the format of: 
+[startUrl, keyword, maxPages, searchType]
+['https://www.reddit.com', 'cats', 10, 'BFS']
+
+
+Spider is starting a breadth search from url: https://www.reddit.com and searching for keyword: cats with 10 max pages.
+
+1 Visiting: https://www.reddit.com
+ **Failed!**
+
+Hello, your cookie has been received
+Your parameters are in the format of: 
+[startUrl, keyword, maxPages, searchType]
+['https://www.reddit.com', 'cats', 10, 'BFS']
+
+
+Spider is starting a breadth search from url: https://www.reddit.com and searching for keyword: cats with 10 max pages.
+
+1 Visiting: https://www.reddit.com
+ **Failed!**
+
+Hello, your cookie has been received
+Your parameters are in the format of: 
+[startUrl, keyword, maxPages, searchType]
+['https://www.reddit.com', 'cats', 10, 'BFS']
+
+
+Spider is starting a breadth search from url: https://www.reddit.com and searching for keyword: cats with 10 max pages.
+
+1 Visiting: https://www.reddit.com
+ **Failed!**
+
+Hello, your cookie has been received
+Your parameters are in the format of: 
+[startUrl, keyword, maxPages, searchType]
+['https://www.reddit.com', 'cats', 10, 'BFS']
+
+
+Spider is starting a breadth search from url: https://www.reddit.com and searching for keyword: cats with 10 max pages.
+
+1 Visiting: https://www.reddit.com
+ **Failed!**
+
+Hello, your cookie has been received
+Your parameters are in the format of: 
+[startUrl, keyword, maxPages, searchType]
+['https://www.reddit.com', 'cats', 10, 'BFS']
+
+
+Spider is starting a breadth search from url: https://www.reddit.com and searching for keyword: cats with 10 max pages.
+
+1 Visiting: https://www.reddit.com
+ **Success!**
+2 Visiting: https://www.reddit.com#content
+ **Success!**
+3 Visiting: https://www.reddit.com/r/announcements/
+ **Success!**
+4 Visiting: https://www.reddit.com/r/Art/
+ **Failed!**
+5 Visiting: https://www.reddit.com/r/AskReddit/
+ **Failed!**
+6 Visiting: https://www.reddit.com/r/askscience/
+ **Failed!**
+7 Visiting: https://www.reddit.com/r/aww/
+ **Failed!**
+8 Visiting: https://www.reddit.com/r/blog/
+ **Failed!**
+9 Visiting: https://www.reddit.com/r/books/
+ **Failed!**
+10 Visiting: https://www.reddit.com/r/creepy/
+ **Failed!**
+Word never found
+Crawling is complete
+
+
+Hello, your cookie has been received
+Your parameters are in the format of: 
+[startUrl, keyword, maxPages, searchType]
+['https://www.reddit.com', 'cats', 10, 'BFS']
+
+
+Spider is starting a breadth search from url: https://www.reddit.com and searching for keyword: cats with 10 max pages.
+
+1 Visiting: https://www.reddit.com
+ **Failed!**
+
+Hello, your cookie has been received
+Your parameters are in the format of: 
+[startUrl, keyword, maxPages, searchType]
+['https://www.reddit.com', 'cats', 10, 'BFS']
+
+
+Spider is starting a breadth search from url: https://www.reddit.com and searching for keyword: cats with 10 max pages.
+
+1 Visiting: https://www.reddit.com
+ **Success!**
+2 Visiting: https://www.reddit.com#content
+ **Success!**
+3 Visiting: https://www.reddit.com/r/announcements/
+ **Failed!**
+4 Visiting: https://www.reddit.com/r/Art/
+ **Success!**
+5 Visiting: https://www.reddit.com/r/AskReddit/
+ **Success!**
+6 Visiting: https://www.reddit.com/r/askscience/
+ **Success!**
+7 Visiting: https://www.reddit.com/r/aww/
+ **Failed!**
+8 Visiting: https://www.reddit.com/r/blog/
+ **Failed!**
+9 Visiting: https://www.reddit.com/r/books/
+ **Failed!**
+10 Visiting: https://www.reddit.com/r/creepy/
+ **Failed!**
+Word never found
+Crawling is complete
+
+
+Hello, your cookie has been received
+Your parameters are in the format of: 
+[startUrl, keyword, maxPages, searchType]
+['https://www.reddit.com', 'cats', 10, 'BFS']
+
+
+Spider is starting a breadth search from url: https://www.reddit.com and searching for keyword: cats with 10 max pages.
+
+1 Visiting: https://www.reddit.com
+ **Failed!**
+
+Hello, your cookie has been received
+Your parameters are in the format of: 
+[startUrl, keyword, maxPages, searchType]
+['https://www.reddit.com', 'cats', 10, 'BFS']
+
+
+Spider is starting a breadth search from url: https://www.reddit.com and searching for keyword: cats with 10 max pages.
+
+1 Visiting: https://www.reddit.com
+ **Failed!**
+
+Hello, your cookie has been received
+Your parameters are in the format of: 
+[startUrl, keyword, maxPages, searchType]
+['https://www.reddit.com', 'cats', 10, 'BFS']
+
+
+Spider is starting a breadth search from url: https://www.reddit.com and searching for keyword: cats with 10 max pages.
+
+1 Visiting: https://www.reddit.com
+ **Failed!**
+
+Hello, your cookie has been received
+Your parameters are in the format of: 
+[startUrl, keyword, maxPages, searchType]
+['https://www.reddit.com', 'cats', 10, 'BFS']
+
+
+Spider is starting a breadth search from url: https://www.reddit.com and searching for keyword: cats with 10 max pages.
+
+1 Visiting: https://www.reddit.com
+ **Success!**
+2 Visiting: https://www.reddit.com#content
+ **Success!**
+3 Visiting: https://www.reddit.com/r/announcements/
+ **Success!**
+4 Visiting: https://www.reddit.com/r/Art/
+ **Success!**
+5 Visiting: https://www.reddit.com/r/AskReddit/
+ **Success!**
+6 Visiting: https://www.reddit.com/r/askscience/
+ **Failed!**
+7 Visiting: https://www.reddit.com/r/aww/
+ **Failed!**
+8 Visiting: https://www.reddit.com/r/blog/
+ **Failed!**
+9 Visiting: https://www.reddit.com/r/books/
+ **Failed!**
+10 Visiting: https://www.reddit.com/r/creepy/
+ **Failed!**
+Word never found
+Crawling is complete
+
+
+Hello, your cookie has been received
+Your parameters are in the format of: 
+[startUrl, keyword, maxPages, searchType]
+['https://www.reddit.com', 'asdfa', 25, 'BFS']
+
+
+Spider is starting a breadth search from url: https://www.reddit.com and searching for keyword: asdfa with 25 max pages.
+
+1 Visiting: https://www.reddit.com
+ **Success!**
+2 Visiting: https://www.reddit.com#content
+ **Failed!**
+3 Visiting: https://www.reddit.com/r/announcements/
+ **Failed!**
+4 Visiting: https://www.reddit.com/r/Art/
+ **Failed!**
+5 Visiting: https://www.reddit.com/r/AskReddit/
+ **Success!**
+6 Visiting: https://www.reddit.com/r/askscience/
+ **Success!**
+7 Visiting: https://www.reddit.com/r/aww/
+ **Success!**
+8 Visiting: https://www.reddit.com/r/blog/
+ **Failed!**
+9 Visiting: https://www.reddit.com/r/books/
+ **Failed!**
+10 Visiting: https://www.reddit.com/r/creepy/
+ **Failed!**
+11 Visiting: https://www.reddit.com/r/dataisbeautiful/
+ **Failed!**
+12 Visiting: https://www.reddit.com/r/DIY/
+ **Failed!**
+13 Visiting: https://www.reddit.com/r/Documentaries/
+ **Success!**
+14 Visiting: https://www.reddit.com/r/EarthPorn/
+ **Success!**
+15 Visiting: https://www.reddit.com/r/explainlikeimfive/
+ **Success!**
+16 Visiting: https://www.reddit.com/r/food/
+ **Failed!**
+17 Visiting: https://www.reddit.com/r/funny/
+ **Failed!**
+18 Visiting: https://www.reddit.com/r/Futurology/
+ **Failed!**
+19 Visiting: https://www.reddit.com/r/gadgets/
+ **Failed!**
+20 Visiting: https://www.reddit.com/r/gaming/
+ **Failed!**
+21 Visiting: https://www.reddit.com/r/GetMotivated/
+ **Failed!**
+22 Visiting: https://www.reddit.com/r/gifs/
+ **Failed!**
+23 Visiting: https://www.reddit.com/r/history/
+ **Success!**
+24 Visiting: https://www.reddit.com/r/IAmA/
+ **Success!**
+25 Visiting: https://www.reddit.com/r/InternetIsBeautiful/
+ **Success!**
+Word never found
+Crawling is complete
+
+
+Hello, your cookie has been received
+Your parameters are in the format of: 71.193.183.116 - - [01/Dec/2016 03:39:43] "POST /crawler HTTP/1.1" 200 -
+71.193.183.116 - - [01/Dec/2016 03:44:37] "POST /crawler HTTP/1.1" 200 -

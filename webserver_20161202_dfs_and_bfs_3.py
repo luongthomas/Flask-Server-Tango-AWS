@@ -20,8 +20,13 @@ from flask import make_response
 # Crawler Dependencies
 from html.parser import HTMLParser # to isolate links in a web page's HTML
 from urllib.request import urlopen # to access a web page
+from urllib.error import URLError
 from urllib import parse
+import time
 import json # to build JSON output
+
+# Ordered Dictionaries
+from collections import OrderedDict
 
 from flask_cors import CORS, cross_origin # to bypass CORS
 
@@ -83,12 +88,8 @@ def startSpider():
 	print("\n")
 
 	# PARSING TOOL
-	# We are going to create a class called LinkParser that inherits some
-	# methods from HTMLParser which is why it is passed into the definition
-	## Credit: from http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/ -->
-	## TO DO: crawler fails to read urls that don't start with www. Fix this.
-	## TO DO: crawler fails to read some content without IO-specific preset. Fix this. For example on Nathalie's Windows 7, need to type chcp 65001 command line
-	## before running code (see http://stackoverflow.com/questions/25127935/unicodeencodeerror-charmap-codec-cant-encode-character-problems
+    # Credit (with modifications): http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/
+    # We are going to create a class called LinkParser that inherits some methods from HTMLParser which is why it is passed into the definition
 
 	class LinkParser(HTMLParser):
 
@@ -98,7 +99,7 @@ def startSpider():
 			# like <a href="www.someurl.com"></a>
 			if tag == 'a':
 				for (key, value) in attrs:
-					if key == 'href':
+					if (key == 'href') and (value != "javascript: void 0;") and (value != "javascript:void(0)"):
 						# We are grabbing the new URL. We are also adding the
 						# base URL to it. For example:
 						# www.netinstructions.com is the base and
@@ -115,24 +116,50 @@ def startSpider():
 		# that our spider() function will call
 		def getLinks(self, startUrl):
 			self.links = []
+		    # Clean-up: If the url ends in the top-level domain but fails to have a trailing "/", add that "/". Only works with 3-char top level domains. Can be improved.
+			if (startUrl[-4:-3] == "."):
+				startUrl = startUrl + "/"
+		    # Clean-up: If the url doesn't start with an http protocol statement, add it. May cause non http/https protocols to fail
+			if (startUrl[:4] != "http"):
+				startUrl = "http://" + startUrl
 			# Remember the base URL which will be important when creating
 			# absolute URLs
 			self.baseUrl = startUrl
-			# Use the urlopen function from the standard Python 3 library
-			response = urlopen(startUrl)
-			# Make sure that we are looking at HTML and not other things that
-			# are floating around on the internet (such as
-			# JavaScript files, CSS, or .PDFs for example)
-			##if response.getheader('Content-Type')=='text/html':
-			if "text/html" in response.getheader("Content-Type"): #NJ edited
-				htmlBytes = response.read()
-				# Note that feed() handles Strings well, but not bytes
-				# (A change from Python 2.x to Python 3.x)
-				htmlString = htmlBytes.decode("utf-8")
-				self.feed(htmlString)
-				return htmlString, self.links
+		    # Now access the site. Some sites block rapid fire requests. When this happens, wait out the block.
+			waitOut = True
+			attempts = 0
+			while (attempts < 5) and (waitOut == True):
+				attempts = attempts + 1
+	            # Use the urlopen function from the standard Python 3
+				try:
+					response = urlopen(startUrl)
+					waitOut = False
+				# When server cannot be reached, wait 3 seconds on each of up to 5 attempts.
+				except URLError as e:
+					if hasattr(e, 'reason'):
+	                    # print('We failed to reach a server.')
+	                    # print('Reason: ', e.reason)
+						if attempts < 4:
+							time.sleep(3)
+							waitOut = True
+						else:
+							return "",[]
+					elif hasattr(e, 'code'):
+	                    # print('The server couldn\'t fulfill the request.')
+	                    # print('Error code: ', e.code)
+						waitOut = False
+						return "",[]
 			else:
-				return "",[]
+	            # Make sure that we are looking at HTML and not other things that
+	            # are floating around on the internet (such as JavaScript files, CSS, or .PDFs for example)
+				if "text/html" in response.getheader("Content-Type"): #NJ edited
+					htmlBytes = response.read()
+	                # Note that feed() handles Strings well, but not bytes (A change from Python 2.x to Python 3.x)
+					htmlString = htmlBytes.decode("utf-8")
+					self.feed(htmlString)
+					return htmlString, self.links
+				else:
+					return "",[]
 
 	# BREADTHSPIDER
 	# The breadthSpider takes in an URL, a word to find, and the number of pages to search through before giving up
@@ -140,10 +167,9 @@ def startSpider():
 	# visited, their child-links, and whether or not they contain the target word. Only 1 page may contain the
 	# word since encountering the word ends the search. The crawler does not visit a page twice.
 	## Credit: Minor changes to http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/
-	# TO DO: check that a page is only visited once
 
-	def breadthSpider(url, keyword, maxPages):
-		traversalDict = {} # Modification --> build a dictionary of pages you've traversed;
+	def breadthSpider(url, word, maxPages):
+		traversalDict = OrderedDict([('searchType', 'BFS')]) # Modification --> build a dictionary of pages you've traversed;
 		pagesToVisit = [url] # Modification
 		numberVisited = 0
 		foundWord = False
@@ -151,7 +177,6 @@ def startSpider():
 		# In our getLinks function we return the web page (this is useful for searching for the word)
 		# and we return a set of links from that web page (this is useful for where to go next)
 		while numberVisited < maxPages and pagesToVisit != [] and not foundWord:
-			#print("\n conditions: ", numberVisited, pagesToVisit[0], foundWord)
 			# Start from the beginning of our collection of pages to visit:
 			url = pagesToVisit[0]
 			pagesToVisit = pagesToVisit[1:]
@@ -162,28 +187,24 @@ def startSpider():
 					visited = True
 			# Modification --> only visit the page if it is new.
 			if visited == False:
-				numberVisited = numberVisited +1  # Modification --> moved from above
 				try:
 					print(numberVisited, "Visiting:", url)
 					parser = LinkParser()
 					data, links = parser.getLinks(url)
-					if data.find(keyword)>-1:
+					if data.find(word)>-1:
 						foundWord = True
-						# Add the pages that we visited to the collection of pages to visit:
-					pagesToVisit = pagesToVisit + links
-					print(" **Success!**")
+					    # Add the pages that we visited to the end of our collection
+					    # of pages to visit:
+					if data != "":
+						pagesToVisit = pagesToVisit + links
+						traversalDict.update({url: {"children": links, "kw": foundWord}})
+						numberVisited = numberVisited +1  #nj --> moved
 				except:
 					print(" **Failed!**")
-			traversalDict.update({url: {"children": links, "keyword": foundWord}})
-		if foundWord:
-			print("The keyword", keyword, "was found at", url)
-		else:
-			print("Word never found")
 		return traversalDict
 
 	# Here is a helper function for a spider that completes Depth first search
-	# def goDeep(url, word, maxPages, numberVisited, traversalList):  
-	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited):  
+	def goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited):
 		url = pagesToVisit[len(pagesToVisit)-1]
 		pagesToVisit = pagesToVisit[0:(len(pagesToVisit)-2)] #remove url being visited in this iteration
 		foundWord = False #IS THIS CREATING A PBM?
@@ -191,7 +212,7 @@ def startSpider():
 		for key in traversalDict:
 			if key == url:
 				visited = True
-		# nj --> only visit the page if it is new.
+		# Only visit the page if it is new.
 		if visited == False:
 			links = []
 			try:
@@ -200,23 +221,25 @@ def startSpider():
 				data, links = parser.getLinks(url)
 				if data.find(word)>-1:
 					foundWord = True
-				pagesToVisit = pagesToVisit + links[::-1]  # Add the pages that we visited in reverse order so that you pop the 1st link in content-order from the top of stack. 
-				print(" **Success!**")				
+					print(" **Found word!**")
+				pagesToVisit = pagesToVisit + links[::-1]  # Add the pages that we visited in reverse order so that you pop the 1st link in content-order from the top of stack.
+				traversalDict.update({url: {"children": links, "kw": foundWord}})
+				print(" **Success!**")
+				if data != "":
+					traversalDict.update({url: {"children": links, "kw": foundWord}})
+				numberVisited = numberVisited +1  #nj --> moved from above
 			except:
-				print(" **Failed!**")		
-			traversalDict.update({url: {"children": links, "kw": foundWord}})
-			numberVisited = numberVisited +1  #nj --> moved from above
+				print(" **Failed!**")
 		while numberVisited < maxPages and pagesToVisit != [] and not foundWord:
 			foundWord, traversalDict, pagesToVisit, numberVisited = goDeep(word, maxPages, traversalDict, pagesToVisit, numberVisited)
 		#After the branch is explored in full, return traversalList
 		return foundWord, traversalDict, pagesToVisit, numberVisited
-			
-			
-	# Here is a spider that completes a Depth First search. 
-	def depthSpider(url, word, maxPages):  
+
+	# Here is a spider that completes a Depth First search.
+	def depthSpider(url, word, maxPages):
 		# traversalList = []
-		traversalDict = {} #nj --> build ordered list of pages you've traversed; will be JS w/ parent/child
-		pagesToVisit = [url] #nj 
+		traversalDict = OrderedDict([('searchType', 'DFS')]) #nj --> build ordered list of pages you've traversed; will be JS w/ parent/child
+		pagesToVisit = [url] #nj
 		numberVisited = 0
 		foundWord = False
 		# numberVisited, foundWord, traversalList = goDeep(url, word, maxPages, numberVisited, traversalList)
