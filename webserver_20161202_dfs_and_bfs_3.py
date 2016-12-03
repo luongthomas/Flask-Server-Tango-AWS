@@ -85,13 +85,6 @@ def startSpider():
 	print(parameters)
 	print("\n")
 
-	# Hold pool of links of the startUrl just in case crawl hits a dead end
-	#startLinks = []
-	#startData = ""
-	#print("Accumulating links for first node, Visiting:", startUrl)
-	#startParser = LinkParser()
-	#startingData, startingLinks = startParser.getLinks(startUrl)
-
 	# Function to check if site is up and available to be crawled via status code 200
 	def isSiteAvailable(url):
 		if urlopen(url).getcode() == 200:
@@ -183,7 +176,6 @@ def startSpider():
 	## Credit: Minor changes to http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/
 
 	def breadthSpider(url, word, maxPages):
-		#traversalDict = OrderedDict([('searchType', 'BFS')]) # Modification --> build a dictionary of pages you've traversed;
 		traversalDict = OrderedDict() # Modification --> build a dictionary of pages you've traversed;
 		pagesToVisit = [url] # Modification
 		numberVisited = 0
@@ -266,7 +258,6 @@ def startSpider():
 	# Here is a spider that completes a Depth First search.
 	def depthSpider(url, word, maxPages):
 		# traversalList = []
-		# traversalDict = OrderedDict([('searchType', 'DFS')]) #nj --> build ordered list of pages you've traversed; will be JS w/ parent/child
 		traversalDict = OrderedDict() #nj --> build ordered list of pages you've traversed; will be JS w/ parent/child
 		pagesToVisit = [url] #nj
 		numberVisited = 0
@@ -287,6 +278,13 @@ def startSpider():
 		traversalDict = breadthSpider(startUrl, keyword, maxPages)
 	elif searchType == "DFS":
 		print("Spider is starting a depth search from url: " + str(startUrl) + " and searching for keyword: " + str(keyword) + " with " + str(maxPages) + " max pages.\n")
+		# Hold pool of links of the startUrl just in case crawl hits a dead end
+		startLinks = []
+		startData = ""
+		print("Accumulating links for first node, Visiting:", startUrl)
+		startParser = LinkParser()
+		startingData, startingLinks = startParser.getLinks(startUrl)
+		print("Starting links", startLinks)
 		traversalDict = depthSpider(startUrl, keyword, maxPages)
 	else:
 		print("The spider needs to receive a valid search type: " + str(searchType) + " is neither 'depth' nor 'breadth'.\n")
